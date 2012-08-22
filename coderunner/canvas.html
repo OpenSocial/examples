@@ -1,0 +1,46 @@
+<head>
+	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/base/jquery-ui.css" type="text/css" media="all"/>
+    <link rel="stylesheet" href="stylesheets/main.css" type="text/css" media="screen" />
+
+	<script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+	<script type="text/javascript" charset="utf-8" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+
+		
+	<script type="text/javascript" charset="utf-8" src="javascripts/main.js"></script>
+	<script type="text/javascript" charset="utf-8" src="javascripts/Math.uuid.js"></script>
+	<script type="text/os-data" xmlns:osd="http://ns.opensocial.org/2008/markup">
+       <osd:ViewerRequest key="viewer"/>
+	   <osd:PeopleRequest key="viewerFriends" userId="@viewer" groupId="@friends"/>
+    </script>
+</head>
+
+<body>
+ <div id="container">
+     <div id="controlsDiv" >
+        <div id="controlsButtons">
+         <button id="refreshCode">Refresh!</button>
+         <!--
+         <button id="saveCode">Save it!</button>
+         -->
+         <button id="runCode">Run it!</button>
+        </div>
+     </div>
+
+    <div id="codeDiv">
+        <div id="codeAreasDiv">
+            <div id="codeInputDiv">
+               <textarea id="codeInput" class="jcr_code"></textarea>
+            </div>
+            <div id="outputDiv">
+               <textarea id="outputArea" rows="15" readonly="readonly" />
+            </div>
+        </div>
+    </div>
+    <div id="navigationDiv">
+        <div id="navigationControlsDiv">
+            <div class="ui-accordion ui-widget ui-helper-reset" id="accordion"/>
+        </div>
+    </div>
+ </div>
+
+</body>

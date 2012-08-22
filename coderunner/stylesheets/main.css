@@ -1,0 +1,152 @@
+<!-- Generic Styles -->
+   <style type="text/css">
+
+     #wrap {
+       width: 99%;
+     }
+
+
+     #filename {
+       background: #ddd;
+       padding: 3px;
+       border: 1px solid #ccc;
+       border-top: 1px solid #eee;
+       border-bottom: 1px solid #999;
+       border-right: 1px solid #999;
+     }
+
+     #filename  {
+       color: #111;
+       font: 11px Courier New !important;
+     }
+
+     #filename code {
+       font-weight: bold;
+       color: #000;
+     }
+
+     code, var, .code, {
+       font: 11px Courier New;
+     }
+     code {
+       color: #090;
+     }
+     var {
+       color: #00d;
+     }
+
+    .smallText{ font-size:9px;}
+
+     .code {
+       font-weight: bold;
+       background: #fffeee;
+       color: #000;
+       padding: 5px;
+       border-top: 2px solid #666;
+       border-left: 2px solid #666;
+       border-bottom: 2px solid #ccc;
+       border-right: 2px solid #ccc;
+     }
+      .code {
+       margin: 2px, 0;
+     }
+
+     .status {
+       color: #999;
+     }
+     #link_container {
+       background: #e0ecff;
+       font: 14px Arial;
+       margin: 10px;
+       padding: 5px;
+     }
+     textarea {
+       width: 100%;
+       height: auto;
+     }
+
+    #codeInput {
+       height: 400px;
+	   width: 100%;
+       position: relative;
+     }
+
+
+	.jcr_code {
+       background: #fffeee;
+       color: #000;
+       border-top: 1px solid #666;
+       border-left: 1px solid #666;
+       border-bottom: 1px solid #ccc;
+       border-right: 1px solid #ccc;
+     }
+
+    #navigationDiv{
+      position:relative;
+      float:left;
+      width:35%;
+    }
+
+    #codeDiv{
+      float:right;
+      clear:both;
+      width:65%;
+    }
+    #codeInputDiv{
+      width: 100%;
+      height: auto;
+      padding-top: .5em;
+    }
+
+    #outputDiv codeInputDiv{
+      width: 100%;
+      padding-top: .5em;
+      height: auto
+    }
+
+    #controlsDiv {
+      width: 100%;
+      clear: both;
+     }
+
+    #navigationControlsDiv {
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-right: .5em;
+      padding-left: .5em
+    }
+
+    #codeAreasDiv {
+      padding-top: 0;
+      padding-bottom: 0;
+      padding-right: .5em;
+      padding-left: .0em
+   }
+
+   #outputArea{
+      overflow: scroll
+   }
+
+    #controlsButtons {
+        padding: .5em .5em .5em .5em;
+        float: right
+    }
+
+    body {
+      margin: 0;
+      min-height: 100%;
+      /* font-family: "Lucida Grande", "Arial", "Helvetica", "Verdana", "sans-serif"; */
+      font-family: "Arial", "Helvetica", "Verdana", "sans-serif";
+      font-size: 10px;
+    }
+
+   .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #EB8F00}
+   .ui-accordion .ui-accordion-header a { color: #1C94C4  }
+
+    #accordion {
+        autoHeight:false;
+        fillSpace: true
+    }
+
+
+   </style>

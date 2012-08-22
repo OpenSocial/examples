@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Module specificationVersion="1">
+  <ModulePrefs title="Jive Code Runner II"
+               description="Quick app to execute OpenSocial and Jive Core API 'gists'. The Jive Code Runner II is integrated with github's gist.
+               Under the 'Your Settings' menu option, you can set your gist user id.
+               Happy Coding!
+               Mark Weitzel, Developer Evangelist, Jive Apps"
+               author="Mark Weitzel"
+               author_affiliation="Jive Software"
+               author_email="mark.weitzel@jivesoftware.com">
+
+    <Require feature="dynamic-height" />
+    <Optional feature="jive-core-v2" />
+    <Require feature="osapi"/>
+    <Require feature="settitle"/>
+    <Require feature="views" />
+    <Require feature="opensocial" />
+    <Require feature="opensocial-data" />
+    <Require feature="setprefs" />
+
+    <Optioanl feature="minimessage" />
+    <Optional feature="locked-domain"/>
+    <Optional feature="oauthpopup"/>
+    <Optional feature="dynamic-width" />
+    <Optional feature="embedded-experiences"/>
+    <Optional feature="selection"/>
+    <Optional feature="open-views"/>
+    <Optional feature="firebug-lite"/>
+    <Optional feature="actions">
+        <Param name="action-contributions">
+    		<![CDATA[
+			<action id="jiveapps.project" path="jive/actions/content/*" label="Code Runner" view="embedded" icon="http://apphosting.jivesoftware.com/apps/dev/actest/images/icon16.png" />
+			]]>
+        </Param>
+    </Optional>
+
+
+    <!-- Icons: 3 sizes, 16x16, 48x48, 128x128 -->
+    <Link rel="Icon"       href="images/icon16.png" />
+    <Link rel="MediumIcon" href="images/icon48.png" />
+    <Link rel="LargeIcon"  href="images/icon128.png" />
+
+  </ModulePrefs>
+  <UserPref name="jiveGistFileRootUrl"  display_name="Jive Gist Index Location" datatype="string" default_value="http://apphosting.jivesoftware.com/apps/dev/jivegists/" required="false" />
+   <UserPref name="jiveDocListFileRootUrl"  display_name="Jive Docs Index Location" datatype="string" default_value="http://apphosting.jivesoftware.com/apps/dev/jivegists/" required="false" />
+  <UserPref name="testUserPref-string"  display_name="Used in userpref Jive Gist - String" datatype="string" default_value="String user pref" required="false" />
+  <UserPref name="testUserPref-boolean" display_name="Used in userpref Jive Gist - Boolean" datatype="boolean" default_value="true" required="false" />
+  <Content type="html" view="home" href="hello.html" preferred_height="400" />
+  <Content type="html" view="default, canvas, embedded" href="canvas2.html" />
+ 
+</Module>
