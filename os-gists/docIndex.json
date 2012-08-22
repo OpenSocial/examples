@@ -1,0 +1,21 @@
+{
+    "files": [
+        {
+            "name": "How does throttling work?",
+            "description": "Doc on app throttling",
+            "tags" : ["jivecore"],
+            "codeUrl": "https://developers.jivesoftware.com/community/docs/DOC-1417"
+        },
+        {
+            "name": "Build an OpenSocial App",
+            "description": "How to build an OpenSocial App",
+            "tags" :["opensocial"],
+            "codeUrl": "http://docs.opensocial.org/display/OSREF/Building+OpenSocial+Apps"
+        }
+
+    ]
+}
+
+
+
+

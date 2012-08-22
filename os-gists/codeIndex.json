@@ -1,0 +1,33 @@
+{
+    "files": [
+        {
+            "name": "Get viewer friends",
+            "description": "Provides the friends of the currently logged in user",
+            "tags" :["opensocial"],
+            "codeUrl": "gists/getviewerfriends.js"
+        },
+	   {
+		    "name": "User preferences",
+			"description": "Shows how to use the test user preferences in the Jive Code Runner's app.xml",
+		    "tags" : ["opensocial", "userprefs"],
+			"codeUrl": "gists/userprefs.js"
+		},
+		{
+		    "name": "Get Environment & Jive Version",
+		    "description": "This code illustrates the proper OpenSocial method to invoke to get the information for the current Jive instance, including the version number, that the app is running in. Note: In Jive 5 instances, this function returns the default information from Apache Shindig. This is a bit misleading and should only be used to indicate a 5.x instance of Jive. Version 6 returns the proper information.",
+	        "tags" : ["opensocial"],
+		    "codeUrl": "gists/getenvironment.js"
+		    },
+			{
+			    "name": "Viewport and Container dimensions",
+			    "description": "Need to understand the size of your app? No problem! Use this code to find out the dimensions of your application using getViewportDimensions(). You can also find out the size of the OpenSocial application container by using getContainerDimensions(callback).",
+		        "tags" : ["opensocial"],
+			    "codeUrl": "gists/getviewportandcontainerdimensions.js"
+			    }
+		   
+    ]
+}
+
+
+
+
