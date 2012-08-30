@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements. See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership. The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License. You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied. See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<Module specificationVersion="1">
+  <ModulePrefs title="stackattack"
+               description="Application to query Stack Overflow"
+               author="Mark Weitzel"
+               author_affiliation="OpenSocial Foundation"
+               author_email="weitzelm.work@gmail.com">
+
+    <!-- Commonly used features -->
+    <Require feature="dynamic-height" />
+    <Require feature="jquery-1.6" />
+    <Require feature="osapi"/>
+    <Require feature="settitle"/>
+    <Require feature="views" />
+	<Require feature="content-rewrite">
+	    <Param name="exclude-url">bootstrap.js</Param>
+  	    <Param name="exclude-url">bootstrap.css</Param>
+	</Require>
+    <Require feature="opensocial" />
+    <Require feature="opensocial-data" />
+    <Require feature="setprefs" />
+    <Optioanl feature="minimessage" />
+    <Optional feature="oauthpopup"/>
+    <Optional feature="dynamic-width" />
+    <Optional feature="embedded-experiences"/>
+    <Optional feature="selection"/>
+    <Optional feature="open-views"/>
+    <Optional feature="actions">
+        <Param name="action-contributions">
+    		<![CDATA[
+			<action id="stackattack.content" path="jive/actions/content/*" label="Stack Overflow" view="home.stackAction" icon="http://apphosting.jivesoftware.com/apps/dev/stackattack/images/icon16.png" />
+			]]>
+        </Param>
+    </Optional>
+
+    <!-- Icons: 3 sizes, 16x16, 48x48, 128x128 -->
+    <Link rel="Icon"       href="images/icon16.png" />
+    <Link rel="MediumIcon" href="images/icon48.png" />
+    <Link rel="LargeIcon"  href="images/icon128.png" />
+
+
+  </ModulePrefs>
+
+
+  <Content type="html" view="home,embedded,home.stackAction" href="home.html" preferred_height="400" />
+  <Content type="html" view="canvas" href="canvas.html" />
+
+</Module>
