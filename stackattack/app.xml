@@ -29,10 +29,6 @@ under the License.
     <Require feature="osapi"/>
     <Require feature="settitle"/>
     <Require feature="views" />
-	<Require feature="content-rewrite">
-	    <Param name="exclude-url">bootstrap.js</Param>
-  	    <Param name="exclude-url">bootstrap.css</Param>
-	</Require>
     <Require feature="opensocial" />
     <Require feature="opensocial-data" />
     <Require feature="setprefs" />
