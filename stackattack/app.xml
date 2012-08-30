@@ -26,7 +26,6 @@ under the License.
 
     <!-- Commonly used features -->
     <Require feature="dynamic-height" />
-    <Require feature="jquery-1.6" />
     <Require feature="osapi"/>
     <Require feature="settitle"/>
     <Require feature="views" />
