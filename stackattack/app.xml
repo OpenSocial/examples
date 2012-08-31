@@ -25,6 +25,10 @@ under the License.
                author_email="weitzelm.work@gmail.com">
 
     <!-- Commonly used features -->
+	<Require feature="content-rewrite">
+	    <Param name="exclude-url">bootstrap.js</Param>
+  	    <Param name="exclude-url">bootstrap.css</Param>
+	</Require>
     <Require feature="dynamic-height" />
     <Require feature="osapi"/>
     <Require feature="settitle"/>
