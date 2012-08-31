@@ -20,9 +20,9 @@ under the License.
 <html lang="en">
 <head>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css" type="text/css" >
+    <script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
 	<script type="text/javascript" charset="utf-8" src="javascripts/main.js"></script>
 	<script type="text/javascript" charset="utf-8" src="bootstrap/js/bootstrap.js"></script>
-    <script src="http://code.jquery.com/jquery.min.js" type="text/javascript"></script>
 	
 	<script xmlns:os="http://ns.opensocial.org/2008/markup" type="text/os-data">
 	  <os:DataRequest key="vwr" method="people.get" userId="@viewer" fields="name,birthday"/>
@@ -40,7 +40,7 @@ under the License.
 			  <label>Topic</label>
 			  <input type="text" placeholder="What are you curious about?" id="searchTerm">
 			  <span class="help-block">Type something you want to know about.</span>
-			  <button type="submit" class="btn" id="searchButton">Go!</button>
+			  <button type="button" class="btn" id="searchButton">Go!</button>
 			</form>
 	    </div>
 	    <div class="span9" id="bodyContentDiv">
