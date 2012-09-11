@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2012 OpenSocial Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<Module>
+  <ModulePrefs title="Dojo 1.8 xhr demo" height="300">
+    <Require feature="osapi" />
+    <!-- 
+      Dojo 1.8 appears to have some cdn detection and it really wants to find
+      the dojo script tag, so we need to tell the gadget not to rewrite it
+    -->
+    <Optional feature="content-rewrite">
+      <Param name="exclude-url">//ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js</Param>
+      <Param name="exclude-url">//ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/tundra/tundra.css</Param>
+    </Optional>
+  </ModulePrefs>
+
+  <Content type="html"><![CDATA[
+    <body class="tundra">
+      <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/dojo/1.8.0/dijit/themes/tundra/tundra.css" />
+      <script>
+        dojoConfig = {
+          has: {
+            'native-xhr2': false // Because our xhr wrapper doesn't have these methods.
+          },
+          async: true,
+          deps: ['dojo/request/xhr', 'dojo/aspect', 'dojo/_base/lang', 'dojo/parser', 'dijit/form/Button'],
+          callback: function(xhr, aspect, lang) {
+            // Use dojo/aspect to override the dojo/request/xhr xhr factory.
+            aspect.around(xhr, '_create', function(orig) {
+              // Our osapi.http wrapper masquarading as an xhr object.
+              // This wrapper could be stubbed out into an AMD module, but is shown here for self-containedness.
+              // This implementation has not been fully tested and very well may require some modifications.
+              // For demo purposes only.
+              function wrapper(args) {
+                this.readyState = this.status = 0;
+                this.responseText = this.statusText = '';
+              }              
+              wrapper.prototype.open = function(method, url, async, user, pass) {
+                if(!osapi.http) {
+                  throw new Error('osapi.http not found.  Did you request the osapi feature in your gadget?');
+                }
+                if(user || pass) {
+                  throw new Error('User and password arguments not supported in osapi.http requests.');
+                } else if(!async) {
+                  throw new Error('Synchronous mode not supported in osapi.http requests.');
+                } else if(!method || !url) {
+                  throw new Error('Invalid arguments.');
+                }
+                this.method = method.toLowerCase();
+                this.href = url.replace(/([?&])dojo\.preventCache=[0-9]+(.)?/, function(match, g1, g2) {
+                  return g1 == '?' && g2 ? g1 : '';
+                });
+              };              
+              wrapper.prototype.send = function(data){
+                if(this.method == 'post') {
+                  this.data_ = data;
+                }
+                osapi.http[this.method]({format: 'text', href: this.href, headers: this.headers}).execute(lang.hitch(this, function(response) {
+                  if(this.aborted) {
+                    return;
+                  }
+                  
+                  if(response.error) {
+                    this.status = response.error.code;
+                    this.statusText = response.error.message;
+                  } else {
+                    this.status = response.status;
+                    var content = this.responseText = response.content;
+                    try {
+                      // dojo handles the ie use case if this is missing.
+                      this.xmlDoc = new DOMParser().parseFromString(content, "text/xml");
+                    } catch (error){}
+                  }
+                  
+                  // handle response headers
+                  for(var header in (response.headers || {})) {
+                    var lc = header.toLowerCase();
+                    if(lc != 'set-cookie' && lc != 'set-cookie2') {
+                      this.respHeaders[header] = response.headers[header];
+                    }
+                  }
+                  this.readyState = 4;
+                  this.onreadystatechange();
+                }));
+               
+                this.readyState = 1;
+                this.onreadystatechange();
+              };
+              wrapper.prototype.setRequestHeader = function(name, value) {
+                if(name && value) {
+                  var headers = this.headers || (this.headers = {}),
+                      values = headers[name] || (headers[name] = []);
+                  values.push(value);
+                }
+              };
+              wrapper.prototype.getResponseHeader = function(header) {
+                return this.respHeaders[header];
+              };
+              wrapper.prototype.getAllResponseHeaders = function() {
+                var buffer = [], i = 0, headers = this.respHeaders || {};
+                for(var header in headers) {
+                  if (headers.hasOwnProperty(header)) {
+                    buffer[i++] = header + ': ' + headers[header];  
+                  }
+                }
+                return buffer.join('\r\n');
+              };
+              wrapper.prototype.abort = function() {
+                this.aborted = 1;
+              };
+              wrapper.prototype.onreadystatechange = function(){};
+            
+              // Return our xhr wrapper factory            
+              return function() {
+                return new wrapper(); // Overriding dojo/request/xhr._create()
+              };
+            });
+          },
+          parseOnLoad: true
+        };
+      </script>
+      <script src="//ajax.googleapis.com/ajax/libs/dojo/1.8.0/dojo/dojo.js"></script>
+      <button data-dojo-type="dijit/form/Button" type="button">Click me!
+        <script type="dojo/on" data-dojo-event="click" data-dojo-args="evt">
+          require(['dojo/request/xhr', 'dojo/dom'], function(xhr, dom){
+            dom.byId("result2").innerHTML = '';
+            xhr("http://www.google.com").then(function(data){
+              dom.byId("result2").innerHTML = data;
+            }, function(err){
+              console.error(err);
+            });
+          });
+        </script>
+      </button>
+      <div id="result2"></div>
+    </body>
+  ]]></Content>
+</Module>
