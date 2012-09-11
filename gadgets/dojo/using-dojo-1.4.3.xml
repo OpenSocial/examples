@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2012 OpenSocial Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<Module>
+  <ModulePrefs title="Simple dojo 1.4.3 gadget" height="300">
+  </ModulePrefs>
+
+  <Content type="html"><![CDATA[
+    <body class="tundra">
+      <link rel="stylesheet" href="http://archive.dojotoolkit.org/cdn/1.4.3-cdn/google/1.4.3/dijit/themes/tundra/tundra.css" />
+      <script src="http://archive.dojotoolkit.org/cdn/1.4.3-cdn/google/1.4.3/dojo/dojo.xd.js"
+        djConfig="baseUrl: 'http://archive.dojotoolkit.org/cdn/1.4.3-cdn/google/1.4.3/dojo', parseOnLoad: true">
+      </script>
+      <script>
+        dojo.require("dijit.dijit");
+        dojo.require("dijit.Calendar");
+      </script>
+      <div dojoType="dijit.Calendar" 
+        data-dojo-props="onChange:function(){dojo.byId('formatted').innerHTML=dojo.date.locale.format(arguments[0], {formatLength: 'full', selector:'date'})}">
+      </div>
+      <p id="formatted"></p>
+    </body>
+  ]]></Content>
+</Module>
