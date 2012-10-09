@@ -39,7 +39,7 @@ public class Main {
   
   /** 
    * Override me.
-   * @return The content of the html mime part.
+   * @return The content of the text/html mime part.
    */
   public static String getEmailDefaultHtml() {
     return 
@@ -49,6 +49,14 @@ public class Main {
       "</head>" +
       "<body>This shows up when an EE cannot be rendered.</body>" +
     "</html>";
+  }
+  
+  /** 
+   * Override me.
+   * @return The content of the text/plain mime part.
+   */
+  public static String getEmailDefaultText() {
+    return "This shows up when an EE cannot be rendered and your client does not support html email.";
   }
   
   /**
@@ -98,13 +106,18 @@ public class Main {
 
     // Create the html part (required)
     MimeBodyPart mbp1 = new MimeBodyPart();
-    mbp1.setContent(getEmailDefaultHtml(), "text/html");
+    mbp1.setContent(getEmailDefaultText(), "text/plain");
     mmp.addBodyPart(mbp1);
+    
+    // Create the html part (required)
+    MimeBodyPart mbp2 = new MimeBodyPart();
+    mbp2.setContent(getEmailDefaultHtml(), "text/html");
+    mmp.addBodyPart(mbp2);
 
     // Create the application/embed+json (required)
-    MimeBodyPart mbp2 = new MimeBodyPart();
-    mbp2.setContent(getEmailEEContextJson(), "application/embed+json");
-    mmp.addBodyPart(mbp2);
+    MimeBodyPart mbp3 = new MimeBodyPart();
+    mbp3.setContent(getEmailEEContextJson(), "application/embed+json");
+    mmp.addBodyPart(mbp3);
 
     msg.setContent(mmp);
 
