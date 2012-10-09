@@ -15,7 +15,9 @@
   limitations under the License.
 -->
 <Module specificationVersion="2.0">
-  <ModulePrefs title="EE Sample Gadget Hello World" /> 
+  <ModulePrefs title="EE Sample Gadget Hello World">
+     <Require feature="embedded-experiences" />
+  </ModulePrefs>
   <Content type="html"><![CDATA[ 
     <script type="text/javascript">
       gadgets.util.registerOnLoadHandler(function() {
