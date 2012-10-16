@@ -1,0 +1,78 @@
+
+<html>
+  <head>
+    <title>Activity Stream</title>
+    <link href="activitystream.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+    
+    <div id="activity-stream">
+      <h1>Activity Stream</h1>
+    </div>
+    
+    <script type="text/html" id="activity_tmpl">
+      <div id={{id}} class="activity">
+        <span class="header">
+          <a class="author">{{actor.displayName}}</a>
+          {{#target}}
+          posted
+          <a class="target">{{displayName}}</a>
+          {{/target}}
+        </span>
+        <div class="avatar">
+          <a href="{{actor.url}}">
+            <img class="avatar-image"
+                 src="{{actor.image.url}}"
+                 height="{{actor.image.height}}"
+                 width="{{actor.image.width}}">
+          </a>
+        </div>
+        <div class="body">
+          <div class="content">
+            <div class="object">
+              {{#object}}
+              <img class="object-image"
+                   src="{{object.image.url}}"
+                   height="{{object.image.height}}"
+                   width="{{object.image.width}}">
+              {{/object}}
+            </div>
+            {{#target}}
+            <div class="inner-content">
+            <div class="content-header">{{displayName}}</div>
+            <br>
+            <div class="content-body">
+            {{#content}} {{content}} {{/content}}
+            {{^content}} <br> {{/content}}
+            </div>
+            </div>
+            {{/target}}
+          </div>
+        </div>
+        <div class="footer">
+          <span class="published">
+            {{published}}
+          </span>
+          <span class="actions">
+            {{#ActionLinks}}
+            <a href="#">{{.}}</a>
+            {{/ActionLinks}}
+          </span>
+        </div>
+        {{#opensocial}}
+        {{#embed}}
+        <div class="embed">
+        </div>
+        {{/embed}}
+        {{/opensocial}}
+      </div>
+    </script>
+
+    <script src="jquery.js"></script>
+    <script src="prettydate.js"></script>
+    <script src="hogan.js"></script>
+    <script src="data.js"></script>
+    <script src="activitystream.js"></script>
+  </body>
+</html>

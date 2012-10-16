@@ -1,0 +1,101 @@
+#activity-stream
+{
+  width:600px;
+  margin-left: auto;
+  margin-right:auto;
+  font-family: 'Open Sans', sans-serif;
+  font-size:14;
+}
+h1
+{
+  text-align:center;
+}
+.activity
+{
+  position:relative;
+  border-bottom:1px solid gray;
+  width:600px;
+  min-height:80px;
+  margin-bottom:10px;
+}
+.activity:hover
+{
+  background-color:#E8F2F6;
+}
+.header
+{
+  position:relative;
+  left:80px;
+}
+.avatar
+{
+  position:absolute;
+  top:5px;
+  left:10px;
+}
+.body
+{
+  position:relative;
+  left: 80px;
+  max-width:500px;
+}
+.inner-content
+{
+  position:relative;
+  display:inline-block;
+  max-width:auto;
+}
+.content
+{
+  position:relative;
+  max-width:500px;
+  margin:0px;
+}
+.content-header
+{
+  display:inline-block;
+  position:relative;
+  font-weight:bold;
+}
+.content-body
+{
+  display:inline-block;
+  position:relative;
+  word-wrap:break-word;
+  max-width:400px;
+}
+.footer
+{
+  position:relative;
+  left:80px;
+  font-size:10;
+  padding-top:5px;
+  padding-bottom:5px;
+}
+.published
+{
+  position:relative;
+    
+}
+.actions
+{
+  position:relative;
+}
+.avatar-image
+{
+  height:50px;
+  width:50px;
+}
+.object
+{
+  vertical-align:top;
+  display:inline-block;
+  position:relative;
+}
+.object-image
+{
+  display:inline-block;
+  position:relative;
+  max-height:100px;
+  max-width:100px;
+}
