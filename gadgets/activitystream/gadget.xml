@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Module specificationVersion='2'>
+  <ModulePrefs title="Activity Stream">
+    <Require feature="osapi" />
+    <Require feature="views" />
+    <Require feature="open-views" />
+    <Require feature="embedded-experiences" />
+    <Require feature="dynamic-height" />
+  </ModulePrefs> 
+  <Content type="html" href="activitystream.html">
+     <![CDATA[
+     ]]>
+  </Content> 
+</Module>
