@@ -28,50 +28,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 
 public class Main {
-  
-  /** 
-   * Override me.
-   * @return The subject of the email.
-   */
-  public static String getEmailSubject() {
-    return "Sample EE Email";
-  }
-  
-  /** 
-   * Override me.
-   * @return The content of the text/html mime part.
-   */
-  public static String getEmailDefaultHtml() {
-    return 
-    "<html>" +
-      "<head>" +
-        "<title>Sample EE HTML Part</title>" +
-      "</head>" +
-      "<body>This shows up when an EE cannot be rendered.</body>" +
-    "</html>";
-  }
-  
-  /** 
-   * Override me.
-   * @return The content of the text/plain mime part.
-   */
-  public static String getEmailDefaultText() {
-    return "This shows up when an EE cannot be rendered and your client does not support html email.";
-  }
-  
-  /**
-   * Override me.
-   * @return The content of the EE context.
-   */
-  public static String getEmailEEContextJson() {
-    return "{" +
-      "\"gadget\" : \"https://raw.github.com/OpenSocial/examples/master/gadgets/ee-generator/ee-sample-gadget.xml\"," +
-      "\"context\" : {" +
-          "\"message\" : \"Hello, world!\"" +
-      "}" +
-  	"}";
-  }
-  
   /**
    * Example:
    * java -Dmail.smtp.host=smtp.example.com \
@@ -81,6 +37,10 @@ public class Main {
    *      -Dmail.smtp.auth=true \
    *      -Dmail.smtp.auth.username=from@example.com \
    *      -Dmail.smtp.auth.password=user-password \
+   *      -Dmail.subject="subject" \
+   *      -Dmail.parts.plain="content" \
+   *      -Dmail.parts.html="<b>content</b>" \
+   *      -Dmail.parts.ee="{\"gadget\":\"http://gadget.com\",\"context\":{}}" \
    *      -jar ee-generator-1.0.0-SNAPSHOT-jar-with-dependencies.jar 
    * 
    * @param args
@@ -98,7 +58,7 @@ public class Main {
     MimeMessage msg = new MimeMessage(session);
     msg.setFrom();
     msg.setRecipients(Message.RecipientType.TO, System.getProperty("mail.to"));
-    msg.setSubject(getEmailSubject());
+    msg.setSubject(System.getProperty("mail.subject"));
     msg.setSentDate(new Date());
 
     // Build your Mulitpart Message
@@ -106,17 +66,17 @@ public class Main {
 
     // Create the html part (required)
     MimeBodyPart mbp1 = new MimeBodyPart();
-    mbp1.setContent(getEmailDefaultText(), "text/plain");
+    mbp1.setContent(System.getProperty("mail.parts.plain"), "text/plain");
     mmp.addBodyPart(mbp1);
     
     // Create the html part (required)
     MimeBodyPart mbp2 = new MimeBodyPart();
-    mbp2.setContent(getEmailDefaultHtml(), "text/html");
+    mbp2.setContent(System.getProperty("mail.parts.html"), "text/html");
     mmp.addBodyPart(mbp2);
 
     // Create the application/embed+json (required)
     MimeBodyPart mbp3 = new MimeBodyPart();
-    mbp3.setContent(getEmailEEContextJson(), "application/embed+json");
+    mbp3.setContent(System.getProperty("mail.parts.ee"), "application/embed+json");
     mmp.addBodyPart(mbp3);
 
     msg.setContent(mmp);
