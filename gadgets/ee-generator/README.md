@@ -30,6 +30,10 @@ java -Dmail.smtp.host=smtp.example.com \
      -Dmail.smtp.auth=true \
      -Dmail.smtp.auth.username=from@example.com \
      -Dmail.smtp.auth.password=user-password \
+     -Dmail.subject="subject" \
+     -Dmail.parts.plain="content" \
+     -Dmail.parts.html="<b>content</b>" \
+     -Dmail.parts.ee="{\"gadget\":\"http://gadget.com\",\"context\":{}}" \
      -jar ee-generator-1.0.0-SNAPSHOT-jar-with-dependencies.jar
 ```   
          
@@ -42,5 +46,9 @@ java -Dmail.smtp.host=smtp.example.com ^
      -Dmail.smtp.auth=true ^
      -Dmail.smtp.auth.username=from@example.com ^
      -Dmail.smtp.auth.password=user-password ^
+     -Dmail.subject="subject" ^
+     -Dmail.parts.plain="content" ^
+     -Dmail.parts.html="<b>content</b>" ^
+     -Dmail.parts.ee="{\"gadget\":\"http://gadget.com\",\"context\":{}}" ^
      -jar ee-generator-1.0.0-SNAPSHOT-jar-with-dependencies.jar
 ```
