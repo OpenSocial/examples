@@ -4,8 +4,9 @@ var template = Hogan.compile($.trim($("#activity_tmpl").text()));
 var social = new OpenSocialWrapper();
 
 social.loadActivityEntries(function(data) {
-  for (var i = 0; i < data.viewerEntries.list.length; i++) {
-    var context = data.viewerEntries.list[i];
+  var activities = data.viewerEntries.list.concat(data.ownerEntries.list, data.friendEntries.list);
+  for (var i = 0; i < activities.length; i++) {
+    var context = activities[i];
     context.published = prettyDate(context.published);
     var rendered = template.render(context);
     $("#activity-stream").append(rendered);
@@ -22,7 +23,7 @@ function handleEE(dataModel) {
     var resultCallback = function() {};
     var navigateCallback = function() {};
     var opt_params = {
-      "viewTarget" : "modal",
+      "viewTarget" : "modal_dialog",
       "coordinates" : {
         "left": "1",
         "right": "1",

@@ -14,9 +14,9 @@
     <script type="text/html" id="activity_tmpl">
       <div id={{id}} class="activity">
         <span class="header">
-          <a class="author">{{actor.displayName}}</a>
+          <a class="author" href="{{actor.url}}">{{actor.displayName}}</a>
+          {{verb}} a {{object.objectType}} to  
           {{#target}}
-          posted
           <a class="target">{{displayName}}</a>
           {{/target}}
         </span>
@@ -25,7 +25,8 @@
             <img class="avatar-image"
                  src="{{actor.image.url}}"
                  height="{{actor.image.height}}"
-                 width="{{actor.image.width}}">
+                 width="{{actor.image.width}}"
+                 onerror="this.onerror=null; this.src='http://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png';">
           </a>
         </div>
         <div class="body">
