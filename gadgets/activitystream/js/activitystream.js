@@ -1,22 +1,23 @@
-var progress = new XhrProgress('progress_bar');
-
+var text_template, social = new OpenSocialWrapper(), progress = new XhrProgress('progress_bar');
+progress.setProgress(25);
 shindig = shindig || {};
 shindig.xhrwrapper = {
   createXHR : progress.createXhr
 }
 
-Handlebars.registerPartial('header', $("#activity_header").html());
-Handlebars.registerPartial('footer', $("#activity_footer").html());
-var text_template = Handlebars.compile($("#activity_body_txt").html());
+gadgets.util.registerOnLoadHandler(function() {
+  Handlebars.registerPartial('header', $("#activity_header").html());
+  Handlebars.registerPartial('footer', $("#activity_footer").html());
+  text_template = Handlebars.compile($("#activity_body_txt").html());
 
-Handlebars.registerHelper('getAvatarProperties', function(actor){
-  return actor.image ? 'src="' + actor.image.url +'" height="' + actor.image.height + '" width="' + actor.image.width + '" ' : " src=error.png ";  
-})
-Handlebars.registerHelper('formatPredicateClause', formatPredicateClause);
+  Handlebars.registerHelper('getAvatarProperties', function(actor){
+    return actor.image ? 'src="' + actor.image.url +'" height="' + actor.image.height + '" width="' + actor.image.width + '" ' : " src=error.png ";  
+  })
+  Handlebars.registerHelper('formatPredicateClause', formatPredicateClause);
+  social.loadActivityEntries(render);
+});
 
-var social = new OpenSocialWrapper();
-progress.setProgress(25);
-social.loadActivityEntries(function(data) {
+function render(data) {
   var activities = data.list;
   var $stream=$("<div></div>");
   for (var i = 0; i < activities.length; i++) {
@@ -30,7 +31,8 @@ social.loadActivityEntries(function(data) {
     }  
   };
   $("#activity-stream").html($stream);
-});
+  gadgets.window.adjustHeight();
+}
 
 function getArticle(obj) {
   return /^[aeiou].*$/.test(obj) ? "an " : "a ";

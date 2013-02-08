@@ -12,6 +12,7 @@
         <div id="progress_bar" class="bar" style="width: 0%;" >&nbsp;</div>
       </div>
     </div> 
+    <script type="text/javascript">gadgets.window.adjustHeight();</script>
     <script type="text/x-handlebars-template" id="activity_header" >
       <div id="{{id}}" class="activity">
         <div class="header">
@@ -73,11 +74,5 @@
     <script src="js/xhrprogress.js"></script>
     <script src="js/OpenSocialWrapper.js"></script>
     <script src="js/activitystream.js"></script>
-    <script>
-      gadgets.util.registerOnLoadHandler(function() {
-        gadgets.window.adjustHeight(500);
-        gadgets.window.adjustWidth();
-      })
-    </script>
   </body>
 </html>
