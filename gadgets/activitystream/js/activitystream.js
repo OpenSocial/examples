@@ -1,14 +1,20 @@
 
-var template = Hogan.compile($.trim($("#activity_tmpl").text()));
+var template = Handlebars.compile($("#activity_tmpl").html());
+Handlebars.registerHelper('experience', function(ee) {  
+  var closure = handleEE(context.openSocial.embed); 
+
+});
+
+Handlebars.registerHelper('formatPredicateClause', formatPredicateClause);
 
 var social = new OpenSocialWrapper();
 
 social.loadActivityEntries(function(data) {
-  var activities = data.viewerEntries.list.concat(data.ownerEntries.list, data.friendEntries.list);
+  var activities = data.list;
   for (var i = 0; i < activities.length; i++) {
     var context = activities[i];
     context.published = prettyDate(context.published);
-    var rendered = template.render(context);
+    var rendered = template(context);
     $("#activity-stream").append(rendered);
 
     if (context.openSocial && context.openSocial.embed) {
@@ -16,7 +22,15 @@ social.loadActivityEntries(function(data) {
       $("#activity-stream > :last").click(closure);
     }  
   };
-})
+});
+
+function getArticle(obj) {
+  return /^[aeiou].*$/.test(obj) ? "an " : "a ";
+}
+
+function getPastTense(obj) {
+  return obj + (/^.*e$/.test(obj) ? "d" : "ed");
+}
 
 function handleEE(dataModel) {
   return function() {
@@ -34,4 +48,88 @@ function handleEE(dataModel) {
     gadgets.views.openEmbeddedExperience(resultCallback, navigateCallback, dataModel, opt_params);
  }   
 }
+
+function formatPredicateClause(verb, object) {
+
+  var clause="";
+  switch(verb) {
+    case "at":
+      clause="was at";
+      break;
+    case "read":
+      clause= "read";
+      break;
+    case "build":
+      clause= "built";
+      break;
+    case "checkin":
+      clause= "checked in";
+      break;
+    case "deny":
+      clause= "denied";
+      break;
+    case "find":
+      clause= "found";
+      break;
+    case "flag-as-inappropriate":
+      return "flagged " + object.displayName ? object.displayName : getArticle() + object.objectType+ " as inappropriate";
+    case "give":
+      clause= "gave";
+      break;
+    case "leave":
+      clause= "left";
+      break;
+    case "lose":
+      clause= "lost";
+      break;
+    case "make-friend":
+      clause= "friended";
+      break;
+    case "qualify":
+      clause= "qualified";
+      break;
+    case "request-friend":
+      return "requested that " + object.displayName ? object.displayName : object.id + " add them as a friend";
+    case "rsvp-maybe":
+      clause= "RSVP'd maybe to";
+      break;
+    case "rsvp-no":
+      clause= "RSVP'd no to";
+      break;
+    case "rsvp-yes":
+      clause= "RSVP'd yes to";
+      break;    
+    case "satisfy":
+      clause= "satisfied";
+      break;
+    case "send":
+      clause= "sent";
+      break;
+    case "stopped-following":
+      return "stopped following " + object.displayName ? object.displayName : object.id;
+    case "submit":
+      clause= "submitted";
+      break;
+    case "tag":
+      clause="tagged";
+      break;
+    case "unsatisfy":
+      clause="unsatisfied";
+      break;
+    case "win":
+      clause="won";
+      break;
+    default:
+      clause=getPastTense(verb);
+  }
+  return clause + " " + getArticle(object.objectType) + " " + getObjectTypeClause(object);
+}
+
+function getObjectTypeClause(type) {
+  if(type.objectType == "collection") {
+    return "collection of " + (type.objectTypes ? type.objectTypes.join(",") : "items")
+  }
+}
+
+
 

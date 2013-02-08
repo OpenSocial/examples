@@ -71,11 +71,8 @@ function OpenSocialWrapper() {
 
 	// ========================= ACTIVITY STREAMS =============================
 	this.loadActivityEntries = function(callback) {
-		var batch = osapi.newBatch();
-		batch.add('viewerEntries', osapi.activitystreams.get({userId: '@viewer', groupId: '@self'}));
-		batch.add('ownerEntries', osapi.activitystreams.get({userId: '@owner', groupId: '@self'}));
-		batch.add('friendEntries', osapi.activitystreams.get({userId: '@viewer', groupId: '@friends'}));
-		batch.execute(callback);
+		var params = {userId: '@viewer', groupId: '@all'};
+		osapi.activitystreams.get(params).execute(callback);
 	}
 
 	this.loadViewerActivityEntries = function(callback) {

@@ -2,24 +2,24 @@
 <html>
   <head>
     <title>Activity Stream</title>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.2.2/css/bootstrap-combined.min.css" rel="stylesheet">
     <link href="css/activitystream.css" rel="stylesheet" type="text/css">
-    <link href="http://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
   </head>
-  <body>
-    
-    <div id="activity-stream">
-      <h1>Activity Stream</h1>
-    </div>
-    
-    <script type="text/html" id="activity_tmpl">
+  <body>   
+    <div id="activity-stream" > &nbsp;</div> 
+    <script type="text/html" id="activity_tmpl" >
       <div id={{id}} class="activity">
-        <span class="header">
+        <div class="header">
+          {{#if title}}
+          <span>{{title}}</span>
+          {{else}}
           <a class="author" href="{{actor.url}}">{{actor.displayName}}</a>
-          {{verb}} a {{object.objectType}} to  
-          {{#target}}
-          <a class="target">{{displayName}}</a>
-          {{/target}}
-        </span>
+          {{formatPredicateClause verb object}} 
+          {{#if target}}          
+          in <a class="target">{{target.displayName}}</a>
+          {{/if}}
+          {{/if}}
+        </div>
         <div class="avatar">
           <a href="{{actor.url}}">
             <img class="avatar-image"
@@ -31,6 +31,11 @@
         </div>
         <div class="body">
           <div class="content">
+            <div class="inner-content">
+              <div class="content-body">
+                {{#if content}} {{content}} {{/if}}
+              </div>
+            </div>
             <div class="object">
               {{#object}}
               <img class="object-image"
@@ -39,16 +44,6 @@
                    width="{{object.image.width}}">
               {{/object}}
             </div>
-            {{#target}}
-            <div class="inner-content">
-            <div class="content-header">{{displayName}}</div>
-            <br>
-            <div class="content-body">
-            {{#content}} {{content}} {{/content}}
-            {{^content}} <br> {{/content}}
-            </div>
-            </div>
-            {{/target}}
           </div>
         </div>
         <div class="footer">
@@ -62,19 +57,17 @@
           </span>
         </div>
         {{#opensocial}}
-        {{#embed}}
         <div class="embed">
+          {{experience embed}}
         </div>
-        {{/embed}}
         {{/opensocial}}
       </div>
     </script>
 
     <script src="js/jquery.js"></script>
     <script src="js/prettydate.js"></script>
-    <script src="js/hogan.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.rc.2/handlebars.min.js"></script>
     <script src="js/OpenSocialWrapper.js"></script>
-    <script src="js/data.js"></script>
     <script src="js/activitystream.js"></script>
     <script>
       gadgets.util.registerOnLoadHandler(function() {

@@ -39,6 +39,9 @@ h1
   left: 80px;
   max-width:500px;
 }
+.header {
+  padding-top:5px;
+}
 .inner-content
 {
   position:relative;
