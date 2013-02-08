@@ -8,8 +8,8 @@
   <body>   
     <div id="activity-stream" >
       <span>Loading activities...</span>
-      <div class="progress progress-striped" >
-        <div id="progress_bar" class="bar" style="width: 0%;" >&nbsp;</div>
+      <div class="progress progress-striped active" >
+        <div id="progress_bar" class="bar" style="width: 10%;" >&nbsp;</div>
       </div>
     </div> 
     <script type="text/javascript">gadgets.window.adjustHeight();</script>
@@ -19,7 +19,7 @@
           {{#if title}}
           <span>{{title}}</span>
           {{else}}
-          <a target="_blank" class="author" href="{{actor.url}}">{{actor.displayName}}</a>
+          <a target="_blank" class="author" href="{{actor.url}}">{{#if actor.displayName}}{{actor.displayName}}{{else}}{{actor.id}}{{/if}}</a>
           {{formatPredicateClause verb object}} 
           {{#if target}}          
           in <a target="_blank" class="target">{{target.displayName}}</a>
@@ -55,7 +55,7 @@
         {{/if}}
         <div class="footer">
           <span class="published">
-            {{published}}
+            <smnall><em>{{published}}</em></small>
           </span>
         </div>
       </div>
@@ -63,7 +63,7 @@
     <script type="text/x-handlebars-template" id="activity_body_txt" >
         {{> header}}
         <div class="content">
-          {{content}}
+          <p>{{content}}</p>
         </div>
         {{> footer}}
     </script>

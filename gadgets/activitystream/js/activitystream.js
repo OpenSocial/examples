@@ -23,7 +23,7 @@ function render(data) {
   var $stream=$("<div></div>");
   for (var i = 0; i < activities.length; i++) {
     var context = activities[i];
-    context.published = prettyDate(context.published);
+    context.published = prettyDate(new Date(context.published).toISOString());
     var template=getTemplateForObject(context.object);
     $stream.append(template(context));
     if (context.openSocial && context.openSocial.embed) {
@@ -32,7 +32,7 @@ function render(data) {
     }  
   };
   $("#activity-stream").html($stream);
-  gadgets.window.adjustHeight();
+  setTimeout(gadgets.window.adjustHeight(), 200);
 }
 
 function getTemplateForObject(obj) {
@@ -147,8 +147,6 @@ function getObjectTypeClause(type) {
   } else {
     return type.objectType;
   }
-
 }
-
 
 
