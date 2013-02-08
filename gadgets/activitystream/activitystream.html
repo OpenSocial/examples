@@ -60,18 +60,25 @@
         </div>
       </div>
     </script>
-      <script type="text/x-handlebars-template" id="activity_body_txt" >
-          {{> header}}
-          <div class="content">
-            {{content}}
-          </div>
-          {{> footer}}
-      </script>
-
+    <script type="text/x-handlebars-template" id="activity_body_txt" >
+        {{> header}}
+        <div class="content">
+          {{content}}
+        </div>
+        {{> footer}}
+    </script>
+    <script type="text/x-handlebars-template" id="activity_body_img" >
+        {{> header}}
+        <div class="content">
+          <p><img class="object-image" src="{{object.image.url}}" height="{{object.image.height}}" width="{{object.image.width}}" alt="Object Image" /> {{content}}</p>
+        </div>
+        {{> footer}}
+    </script>
+    
+    <script src="js/xhrprogress.js"></script>
     <script src="js/jquery.js"></script>
     <script src="js/prettydate.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.rc.2/handlebars.min.js"></script>
-    <script src="js/xhrprogress.js"></script>
     <script src="js/OpenSocialWrapper.js"></script>
     <script src="js/activitystream.js"></script>
   </body>

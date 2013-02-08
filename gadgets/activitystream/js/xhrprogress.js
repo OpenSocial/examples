@@ -1,4 +1,4 @@
-function XhrProgress(elementId) {
+function XhrProgress(elementId, initial) {
 	var el=elementId;
     var self = this;	
 
@@ -53,4 +53,6 @@ function XhrProgress(elementId) {
 	    obj.attachEvent("on"+eventName, handler);
 	  }
 	}
+
+	this.setProgress(initial);
 }

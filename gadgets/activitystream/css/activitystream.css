@@ -1,10 +1,6 @@
 #activity-stream
 {
-  width:600px;
-  margin-left: auto;
-  margin-right:auto;
-  font-family: 'Open Sans', sans-serif;
-  font-size:14;
+  width:100%;
 }
 h1
 {
@@ -100,6 +96,7 @@ h1
 {
   display:inline-block;
   position:relative;
-  max-height:100px;
-  max-width:100px;
+  max-height:60px;
+  max-width:60px;
+  margin-right: 10px;
 }

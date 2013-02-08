@@ -1,5 +1,4 @@
-var text_template, social = new OpenSocialWrapper(), progress = new XhrProgress('progress_bar');
-progress.setProgress(25);
+var text_template, img_template, social = new OpenSocialWrapper(), progress=new XhrProgress('progress_bar', 10); 
 shindig = shindig || {};
 shindig.xhrwrapper = {
   createXHR : progress.createXhr
@@ -9,11 +8,13 @@ gadgets.util.registerOnLoadHandler(function() {
   Handlebars.registerPartial('header', $("#activity_header").html());
   Handlebars.registerPartial('footer', $("#activity_footer").html());
   text_template = Handlebars.compile($("#activity_body_txt").html());
+  img_template = Handlebars.compile($("#activity_body_img").html());
 
   Handlebars.registerHelper('getAvatarProperties', function(actor){
     return actor.image ? 'src="' + actor.image.url +'" height="' + actor.image.height + '" width="' + actor.image.width + '" ' : " src=error.png ";  
   })
   Handlebars.registerHelper('formatPredicateClause', formatPredicateClause);
+  progress.setProgress(25);
   social.loadActivityEntries(render);
 });
 
@@ -23,8 +24,8 @@ function render(data) {
   for (var i = 0; i < activities.length; i++) {
     var context = activities[i];
     context.published = prettyDate(context.published);
-    $stream.append(text_template(context));
-
+    var template=getTemplateForObject(context.object);
+    $stream.append(template(context));
     if (context.openSocial && context.openSocial.embed) {
       var closure = handleEE(context.openSocial.embed, context);
       $("#ee_" + context.id).live('click', closure);
@@ -32,6 +33,10 @@ function render(data) {
   };
   $("#activity-stream").html($stream);
   gadgets.window.adjustHeight();
+}
+
+function getTemplateForObject(obj) {
+  return obj.image ? img_template : text_template;
 }
 
 function getArticle(obj) {
