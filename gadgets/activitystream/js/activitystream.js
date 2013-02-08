@@ -1,10 +1,8 @@
 
 var template = Handlebars.compile($("#activity_tmpl").html());
-Handlebars.registerHelper('experience', function(ee) {  
-  var closure = handleEE(context.openSocial.embed); 
-
-});
-
+Handlebars.registerHelper('getAvatarProperties', function(actor){
+  return actor.image ? 'src="' + actor.image.url +'" height="' + actor.image.height + '" width="' + actor.image.width + '" ' : " src=error.png ";  
+})
 Handlebars.registerHelper('formatPredicateClause', formatPredicateClause);
 
 var social = new OpenSocialWrapper();
@@ -18,8 +16,8 @@ social.loadActivityEntries(function(data) {
     $("#activity-stream").append(rendered);
 
     if (context.openSocial && context.openSocial.embed) {
-      var closure = handleEE(context.openSocial.embed);
-      $("#activity-stream > :last").click(closure);
+      var closure = handleEE(context.openSocial.embed, context);
+      $("#ee_" + context.id).click(closure);
     }  
   };
 });
@@ -32,19 +30,20 @@ function getPastTense(obj) {
   return obj + (/^.*e$/.test(obj) ? "d" : "ed");
 }
 
-function handleEE(dataModel) {
+function handleEE(dataModel, item) {
   return function() {
     var resultCallback = function() {};
     var navigateCallback = function() {};
-    var opt_params = {
-      "viewTarget" : "modal_dialog",
-      "coordinates" : {
-        "left": "1",
-        "right": "1",
-        "top": "1",
-        "bottom": "1"
-      }
-    };
+    var opt_params = {};
+    if(dataModel.preferredExperience && dataModel.preferredExperience.target) {
+      var target = dataModel.preferredExperience.target;
+      opt_params.viewTarget=target.viewTarget;
+      opt_params.view=target.view;
+    } else {
+      opt_params.viewTarget = "modal_dialog";
+    }
+    dataModel.context.openSocial = dataModel.context.openSocial || {};
+    dataModel.context.openSocial.associatedContext = item;
     gadgets.views.openEmbeddedExperience(resultCallback, navigateCallback, dataModel, opt_params);
  }   
 }
@@ -128,7 +127,10 @@ function formatPredicateClause(verb, object) {
 function getObjectTypeClause(type) {
   if(type.objectType == "collection") {
     return "collection of " + (type.objectTypes ? type.objectTypes.join(",") : "items")
+  } else {
+    return type.objectType;
   }
+
 }
 
 

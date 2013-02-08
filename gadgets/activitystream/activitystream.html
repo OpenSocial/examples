@@ -13,54 +13,50 @@
           {{#if title}}
           <span>{{title}}</span>
           {{else}}
-          <a class="author" href="{{actor.url}}">{{actor.displayName}}</a>
+          <a target="_blank" class="author" href="{{actor.url}}">{{actor.displayName}}</a>
           {{formatPredicateClause verb object}} 
           {{#if target}}          
-          in <a class="target">{{target.displayName}}</a>
+          in <a target="_blank" class="target">{{target.displayName}}</a>
           {{/if}}
           {{/if}}
         </div>
         <div class="avatar">
-          <a href="{{actor.url}}">
+          <a target="_blank" href="{{actor.url}}">
             <img class="avatar-image"
-                 src="{{actor.image.url}}"
-                 height="{{actor.image.height}}"
-                 width="{{actor.image.width}}"
-                 onerror="this.onerror=null; this.src='http://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png';">
+                 {{getAvatarProperties actor}}
+                 onerror="this.onerror=null; this.src='http://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png';" />
           </a>
         </div>
         <div class="body">
           <div class="content">
-            <div class="inner-content">
-              <div class="content-body">
-                {{#if content}} {{content}} {{/if}}
-              </div>
+            {{#if content}}
+            {{content}}
+            {{/if}}
+            {{#if openSocial}}
+            <div class="embed">
+              <a href="#" id="ee_{{id}}">
+                {{#if embed.preferredExperience}}
+                  {{#if embed.preferredExperience.title}}
+                    <span title="{{embed.preferredExperience.title}}">{{embed.preferredExperience.label}}</span>
+                  {{else}}
+                    <img alt="{{embed.preferredExperience.altText}}" 
+                         src="{{embed.previewImage}}" 
+                         height="{{embed.preferredExperience.height}}" 
+                         width="{{embed.preferredExperience.width}}" />
+                  {{/if}}
+                {{else}}
+                  <span>More...</span>
+                {{/if}}  
+              </a>
             </div>
-            <div class="object">
-              {{#object}}
-              <img class="object-image"
-                   src="{{object.image.url}}"
-                   height="{{object.image.height}}"
-                   width="{{object.image.width}}">
-              {{/object}}
-            </div>
+            {{/if}}
           </div>
         </div>
         <div class="footer">
           <span class="published">
             {{published}}
           </span>
-          <span class="actions">
-            {{#ActionLinks}}
-            <a href="#">{{.}}</a>
-            {{/ActionLinks}}
-          </span>
         </div>
-        {{#opensocial}}
-        <div class="embed">
-          {{experience embed}}
-        </div>
-        {{/opensocial}}
       </div>
     </script>
 
