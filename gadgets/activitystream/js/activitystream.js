@@ -1,25 +1,35 @@
+var progress = new XhrProgress('progress_bar');
 
-var template = Handlebars.compile($("#activity_tmpl").html());
+shindig = shindig || {};
+shindig.xhrwrapper = {
+  createXHR : progress.createXhr
+}
+
+Handlebars.registerPartial('header', $("#activity_header").html());
+Handlebars.registerPartial('footer', $("#activity_footer").html());
+var text_template = Handlebars.compile($("#activity_body_txt").html());
+
 Handlebars.registerHelper('getAvatarProperties', function(actor){
   return actor.image ? 'src="' + actor.image.url +'" height="' + actor.image.height + '" width="' + actor.image.width + '" ' : " src=error.png ";  
 })
 Handlebars.registerHelper('formatPredicateClause', formatPredicateClause);
 
 var social = new OpenSocialWrapper();
-
+progress.setProgress(25);
 social.loadActivityEntries(function(data) {
   var activities = data.list;
+  var $stream=$("<div></div>");
   for (var i = 0; i < activities.length; i++) {
     var context = activities[i];
     context.published = prettyDate(context.published);
-    var rendered = template(context);
-    $("#activity-stream").append(rendered);
+    $stream.append(text_template(context));
 
     if (context.openSocial && context.openSocial.embed) {
       var closure = handleEE(context.openSocial.embed, context);
-      $("#ee_" + context.id).click(closure);
+      $("#ee_" + context.id).live('click', closure);
     }  
   };
+  $("#activity-stream").html($stream);
 });
 
 function getArticle(obj) {
