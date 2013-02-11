@@ -13,6 +13,8 @@
       </div>
     </div> 
     <script type="text/javascript">gadgets.window.adjustHeight();</script>
+
+    <!-- Handlebars Templates-->
     <script type="text/x-handlebars-template" id="activity_header" >
       <div id="{{id}}" class="activity">
         <div class="header">
@@ -36,29 +38,30 @@
         <div class="body">
       </script>
       <script type="text/x-handlebars-template" id="activity_footer">
-        {{#if openSocial}}
-        <div class="embed">
-          <a href="#" id="ee_{{id}}">
-            {{#if embed.preferredExperience}}
-              {{#if embed.preferredExperience.altText}}
-              <img alt="{{embed.preferredExperience.altText}}" 
-                   src="{{embed.previewImage}}" 
-                   height="{{embed.preferredExperience.height}}" 
-                   width="{{embed.preferredExperience.width}}" />
-              {{/if}}
-              <span title="{{embed.preferredExperience.title}}">{{embed.preferredExperience.label}}</span>
-            {{else}}
-              <span>more...</span>
-            {{/if}}  
-          </a>
-        </div>
-        {{/if}}
         <div class="footer">
           <span class="published">
             <smnall><em>{{published}}</em></small>
           </span>
+        {{#if openSocial}}
+          <a href="#" id="ee_{{id}}">
+            {{#if embed.preferredExperience.display}}
+              {{#if embed.preferredExperience.display.altText}}
+              <img alt="{{embed.preferredExperience.altText}}" 
+                   src="{{embed.previewImage}}" 
+                   height="{{embed.preferredExperience.display.height}}" 
+                   width="{{embed.preferredExperience.display.width}}" />
+              {{/if}}
+              <span title="{{embed.preferredExperience.display.title}}">{{embed.preferredExperience.display.label}}</span>
+            {{else}}
+              <span>more...</span>
+            {{/if}}  
+          </a>
+        {{/if}}
         </div>
       </div>
+    </script>
+    <script type="text/x-handlebars-template" id="activity_body_empty">
+      <blockquote><p>No activities found</p></blockquote>
     </script>
     <script type="text/x-handlebars-template" id="activity_body_txt" >
         {{> header}}

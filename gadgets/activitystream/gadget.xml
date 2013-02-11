@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Module specificationVersion='2'>
-  <ModulePrefs title="Activity Stream">
+  <ModulePrefs title="OpenSocial Activity Stream" 
+               author="OpenSocial Foundation"
+               description="OpenSocial Activity Streams Gadget with support for launching Embedded Experiences"
+               author_email="dev@opensocial.org"
+    >
     <Require feature="osapi" />
     <Require feature="views" />
     <Require feature="open-views" />
     <Require feature="embedded-experiences" />
     <Require feature="dynamic-height" />
+    <Require feature="setprefs" />      
   </ModulePrefs> 
-  <Content type="html" href="activitystream.html">
-     <![CDATA[
-     ]]>
-  </Content> 
+  <UserPref name="max_items"
+            display_name="Maximum Displayed Items"
+            default_value="25"
+            datatype="string"/>  
+  <UserPref name="refresh_interval"
+            display_name="Activity Refresh Interval (in seconds)"
+            default_value="15"
+            datatype="string"/> 
+  <Content type="html" href="activitystream.html" />
 </Module>

@@ -1,8 +1,12 @@
+body{
+  padding: 1px;
+}
+
 #activity-stream
 {
   width:100%;
 }
-h1
+.centered
 {
   text-align:center;
 }
@@ -49,6 +53,7 @@ h1
   position:relative;
   max-width:500px;
   margin:0px;
+  padding: 5px 0px 3px 3px;
   background-color: #f7f7f9;
 }
 .content-header
@@ -71,7 +76,8 @@ h1
 .published
 {
   position:relative;
-    
+  margin-right: 15px; 
+  font-size: 80%;  
 }
 .actions
 {
