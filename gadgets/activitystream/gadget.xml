@@ -18,7 +18,7 @@
             datatype="string"/>  
   <UserPref name="refresh_interval"
             display_name="Activity Refresh Interval (in seconds)"
-            default_value="15"
+            default_value="30"
             datatype="string"/> 
   <Content type="html" href="activitystream.html" />
 </Module>

@@ -16,7 +16,7 @@
 
     <!-- Handlebars Templates-->
     <script type="text/x-handlebars-template" id="activity_header" >
-      <div id="{{id}}" class="activity">
+      <article id="{{id}}" class="activity">
         <div class="header">
           {{#if title}}
           <span>{{title}}</span>
@@ -37,28 +37,33 @@
         </div>
         <div class="body">
       </script>
-      <script type="text/x-handlebars-template" id="activity_footer">
-        <div class="footer">
+      <script type="text/x-handlebars-template" id="activity_footer" style="display:none;">
+        <footer class="footer">
           <span class="published">
-            <smnall><em>{{published}}</em></small>
-          </span>
-        {{#if openSocial}}
-          <a href="#" id="ee_{{id}}">
-            {{#if embed.preferredExperience.display}}
-              {{#if embed.preferredExperience.display.altText}}
-              <img alt="{{embed.preferredExperience.altText}}" 
-                   src="{{embed.previewImage}}" 
-                   height="{{embed.preferredExperience.display.height}}" 
-                   width="{{embed.preferredExperience.display.width}}" />
+            <small><em>{{published}}</em></small>
+          </span> 
+          {{> embedded}}       
+        </footer>
+      </article>
+    </script>
+    <script type="text/x-handlebars-template" id="activity_embedded">
+        {{#if openSocial.embed}}
+          <a href="#" id="ee_{{id}}" class="embedded">
+            {{#if openSocial.embed.preferredExperience.display}}
+              {{#if openSocial.embed.preferredExperience.display.altText}}
+              <img alt="{{openSocial.embed.preferredExperience.altText}}" 
+                   src="{{openSocial.embed.previewImage}}" 
+                   height="{{openSocial.embed.preferredExperience.display.height}}" 
+                   width="{{openSocial.embed.preferredExperience.display.width}}" />
+              {{else}}
+              <i class="icon-share" ></i>
               {{/if}}
-              <span title="{{embed.preferredExperience.display.title}}">{{embed.preferredExperience.display.label}}</span>
+              <span title="{{openSocial.embed.preferredExperience.display.title}}"> {{openSocial.embed.preferredExperience.display.label}}</span>
             {{else}}
-              <span>more...</span>
+              <i class="icon-share" ></i><span> Open</span>
             {{/if}}  
           </a>
         {{/if}}
-        </div>
-      </div>
     </script>
     <script type="text/x-handlebars-template" id="activity_body_empty">
       <blockquote><p>No activities found</p></blockquote>
@@ -66,14 +71,14 @@
     <script type="text/x-handlebars-template" id="activity_body_txt" >
         {{> header}}
         <div class="content">
-          <p>{{content}}</p>
+          <span>{{content}}</span>
         </div>
         {{> footer}}
     </script>
     <script type="text/x-handlebars-template" id="activity_body_img" >
         {{> header}}
         <div class="content">
-          <p><img class="object-image" src="{{object.image.url}}" height="{{object.image.height}}" width="{{object.image.width}}" alt="Object Image" /> {{content}}</p>
+          <span><img class="object-image" src="{{object.image.url}}" height="{{object.image.height}}" width="{{object.image.width}}" alt="Object Image" /> {{content}}</span>
         </div>
         {{> footer}}
     </script>

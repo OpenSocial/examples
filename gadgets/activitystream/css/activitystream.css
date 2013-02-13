@@ -13,7 +13,7 @@ body{
 .activity
 {
   position:relative;
-  border-bottom:1px solid gray;
+  border-bottom:1px solid #f7f7f9;
   width:600px;
   min-height:80px;
   margin-bottom:10px;
@@ -30,11 +30,12 @@ body{
 .avatar
 {
   position:absolute;
-  top:5px;
+  top:10px;
   left:10px;
 }
 .body
 {
+  padding-top: 2px;
   position:relative;
   left: 80px;
   max-width:500px;
@@ -53,7 +54,7 @@ body{
   position:relative;
   max-width:500px;
   margin:0px;
-  padding: 5px 0px 3px 3px;
+  padding: 3px;
   background-color: #f7f7f9;
 }
 .content-header
@@ -77,7 +78,6 @@ body{
 {
   position:relative;
   margin-right: 15px; 
-  font-size: 80%;  
 }
 .actions
 {
@@ -101,4 +101,6 @@ body{
   max-height:60px;
   max-width:60px;
   margin-right: 10px;
+}
+.embedded {
 }

@@ -1,6 +1,6 @@
 (function() {
 
-  var interval, lastRendered=null, $streamWrapper,loaded=false, textTemplate, imgTemplate, emptyTemplate, social = new OpenSocialWrapper(), progress=new XhrProgress('progress_bar', 10), prefs=new gadgets.Prefs(), refreshInterval=parseInt(prefs.getString("refresh_interval"))*1000, maxItems=parseInt(prefs.getString("max_items")); 
+  var interval, lastRendered=null, firstRendered, $streamWrapper,loaded=false, textTemplate, imgTemplate, emptyTemplate, social = new OpenSocialWrapper(), progress=new XhrProgress('progress_bar', 10), prefs=new gadgets.Prefs(), refreshInterval=parseInt(prefs.getString("refresh_interval"))*1000, maxItems=parseInt(prefs.getString("max_items")); 
   shindig = shindig || {};
   shindig.xhrwrapper = {
     createXHR : progress.createXhr
@@ -8,6 +8,7 @@
 
   gadgets.util.registerOnLoadHandler(function() {
     $streamWrapper=$("#activity-stream");
+    Handlebars.registerPartial('embedded', $("#activity_embedded").html());
     Handlebars.registerPartial('header', $("#activity_header").html());
     Handlebars.registerPartial('footer', $("#activity_footer").html());
     textTemplate = Handlebars.compile($("#activity_body_txt").html());
@@ -30,28 +31,30 @@
     if(activities.length == 0) {
       if(!loaded) $streamWrapper.html(emptyTemplate());  
     } else {
-      if(lastRendered==null && lastRendered != activities[0].id) {
+      if(firstRendered==null && firstRendered != activities[0].id) {
         renderActivities($stream, activities);
         $streamWrapper.html($stream);
-        setTimeout(gadgets.window.adjustHeight(), 100);
+        resize();
       }
     }
     loaded=true;
   }
 
   function renderActivities($stream, activities) {  
-    length = activities.length < maxItems ? activities.length : maxItems;
+    var length = activities.length < maxItems ? activities.length : maxItems;
     for (var i = 0; i < length; i++) {
       var context = activities[i];
-      if(i==0) lastRendered = context.id;
       context.published = prettyDate(new Date(context.published).toISOString());
       var template=getTemplateForObject(context.object);
       $stream.append(template(context));
+
       if (context.openSocial && context.openSocial.embed) {
         var closure = handleEE(context.openSocial.embed, context);
         $("#ee_" + context.id).live('click', closure);
       }  
-    };
+    }
+    firstRendered = activities[0].id;
+    lastRendered = activities[length-1].id;
   }
 
   function getTemplateForObject(obj) {
@@ -78,8 +81,10 @@
       } else {
         opt_params.viewTarget = "modal_dialog";
       }
-      dataModel.context.openSocial = dataModel.context.openSocial || {};
-      dataModel.context.openSocial.associatedContext = item;
+      if(typeof dataModel.context == "object") {
+        dataModel.context.openSocial = dataModel.context.openSocial || {};
+        dataModel.context.openSocial.associatedContext = item;
+      }
       gadgets.views.openEmbeddedExperience(resultCallback, navigateCallback, dataModel, opt_params);
    }   
   }
@@ -166,6 +171,18 @@
     } else {
       return type.objectType;
     }
+  }
+  function resize() { 
+    var resizeInterval = null;
+    var fn = function() {
+      if($("#" + lastRendered).get(0) != null) {
+        gadgets.window.adjustHeight();
+        if(resizeInterval != null) {
+          clearInterval(resizeInterval);
+        }
+      }
+    }
+    resizeInterval = setInterval(fn, 50)
   }
 
 })();

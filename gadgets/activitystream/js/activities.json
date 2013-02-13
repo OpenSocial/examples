@@ -1,4 +1,4 @@
-{
+[{
   "published": "2013-02-07T15:04:55Z",
   "generator": {
     "url": "http://example.org/activities-app"
@@ -48,4 +48,48 @@
       }
     }
   }
+},
+{
+  "published": "2013-02-08T15:04:55Z",
+  "actor": {
+    "url": "http://localhost:8080/portal/app/people/canonical",
+    "objectType": "person",
+    "id": "canonical",
+    "image": {
+      "url": "http://example.org/canonical/image",
+      "width": 250,
+      "height": 250
+    }
+  },
+  "content": "OpenSocial Getting Started Video 1",
+  "verb": "post",
+  "object" : {
+    "objectType": "video",
+    "image": {
+      "url": "http://i.ytimg.com/vi/9gW2YVBrNVA/1.jpg",
+      "width": 250,
+      "height": 250
+    }
+  },
+  "openSocial": {
+    "embed": {
+      "gadget": "http://opensocial2.org:8080/collabapp/pages/home/embeddedExperiences/YouTube.xml",
+      "preferredExperience": {
+        "display":{
+          "type": "text",
+          "label": "Open Video",
+          "title": "Click this link to open the video"
+        },
+        "target": {
+          "view": "embedded",
+          "viewTarget": "sidebar"
+
+        }
+      },
+      "context" : "9gW2YVBrNVA" 
+    }
+  }
 }
+]
+
+
