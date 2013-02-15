@@ -15,8 +15,8 @@
     imgTemplate = Handlebars.compile($("#activity_body_img").html());
     emptyTemplate = Handlebars.compile($("#activity_body_empty").html());
 
-    Handlebars.registerHelper('getAvatarProperties', function(actor){
-      return actor.image ? 'src="' + actor.image.url +'" height="' + actor.image.height + '" width="' + actor.image.width + '" ' : " src=error.png ";  
+    Handlebars.registerHelper('getAvatarUrl', function(actor){
+      return actor.image ? actor.image.url : "error.png";  
     })
     Handlebars.registerHelper('formatPredicateClause', formatPredicateClause);
     progress.setProgress(25);
