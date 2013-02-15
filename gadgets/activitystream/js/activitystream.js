@@ -20,7 +20,7 @@
     })
     Handlebars.registerHelper('formatPredicateClause', formatPredicateClause);
     progress.setProgress(25);
-    var activityFn = gadgets.views.getCurrentView().getName() == gadgets.views.ViewType.PROFILE ? function() { social.loadOwnerActivityEntries(render); } : function() { social.loadActivityEntries(render); };
+    var activityFn = gadgets.views.getCurrentView().getName().toUpperCase() == gadgets.views.ViewType.PROFILE ? function() { social.loadOwnerActivityEntries(render); } : function() { social.loadActivityEntries(render); };
     activityFn();
     interval = setInterval(activityFn, refreshInterval);
   });
@@ -31,10 +31,14 @@
     if(activities.length == 0) {
       if(!loaded) $streamWrapper.html(emptyTemplate());  
     } else {
-      if(firstRendered==null && firstRendered != activities[0].id) {
-        renderActivities($stream, activities);
-        $streamWrapper.html($stream);
-        resize();
+      if(firstRendered==null || firstRendered != activities[0].id) {
+        $streamWrapper.fadeOut(200);
+        setTimeout(function(){ 
+          renderActivities($stream, activities);
+          $streamWrapper.html($stream);
+          $streamWrapper.fadeIn(50);
+          resize();
+        }, 200);
       }
     }
     loaded=true;
@@ -123,7 +127,7 @@
         clause= "lost";
         break;
       case "make-friend":
-        clause= "friended";
+        return "connected with " + getObjectTypeClause(object);
         break;
       case "qualify":
         clause= "qualified";
@@ -166,16 +170,19 @@
   }
 
   function getObjectTypeClause(type) {
-    if(type.objectType == "collection") {
-      return "collection of " + (type.objectTypes ? type.objectTypes.join(",") : "items")
-    } else {
-      return type.objectType;
+    switch(type.objectType) {
+      case "collection": 
+        return "collection of " + (type.objectTypes ? type.objectTypes.join(",") : "items");
+      case "person": 
+        return type.displayName ? type.displayName : type.id;
+      default:
+        return type.objectType;
     }
   }
   function resize() { 
     var resizeInterval = null;
     var fn = function() {
-      if($("#" + lastRendered).get(0) != null) {
+      if(document.getElementById(lastRendered)) {
         gadgets.window.adjustHeight();
         if(resizeInterval != null) {
           clearInterval(resizeInterval);

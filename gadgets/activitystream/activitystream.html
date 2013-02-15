@@ -78,7 +78,12 @@
     <script type="text/x-handlebars-template" id="activity_body_img" >
         {{> header}}
         <div class="content">
-          <span><img class="object-image" src="{{object.image.url}}" height="{{object.image.height}}" width="{{object.image.width}}" alt="Object Image" /> {{content}}</span>
+          <span><img class="object-image" 
+                    src="{{object.image.url}}" 
+                    height="{{object.image.height}}" 
+                    width="{{object.image.width}}" 
+                    alt="Object Image" 
+                    onerror="this.style.display='none';"/> {{content}}</span>
         </div>
         {{> footer}}
     </script>

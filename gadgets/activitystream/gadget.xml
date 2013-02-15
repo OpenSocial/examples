@@ -20,5 +20,5 @@
             display_name="Activity Refresh Interval (in seconds)"
             default_value="30"
             datatype="string"/> 
-  <Content type="html" href="activitystream.html" />
+  <Content type="html" href="activitystream.html" view="default, home, canvas, profile" />
 </Module>
