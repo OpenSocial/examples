@@ -24,12 +24,13 @@
           <a target="_blank" class="author" href="{{actor.url}}">{{#if actor.displayName}}{{actor.displayName}}{{else}}{{actor.id}}{{/if}}</a>
           {{formatPredicateClause verb object}} 
           {{#if target}}          
-          in <a target="_blank" class="target">{{target.displayName}}</a>
+              {{formatTargetObjectPreposition target.objectType}} <a target="_blank" class="target">{{target.displayName}}</a>
           {{/if}}
           {{/if}}
         </div>
         <div class="avatar">
           <a target="_blank" href="{{actor.url}}">
+
             <img class="avatar-image"
                  src="{{getAvatarUrl actor}}"
                  onerror="this.onerror=null; this.src='http://upload.wikimedia.org/wikipedia/en/b/b1/Portrait_placeholder.png';" />

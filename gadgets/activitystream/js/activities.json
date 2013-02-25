@@ -39,7 +39,7 @@
           "type": "text",
           "label": "Add Comment ...",
           "title": "Click this link to add a comment"
-        },
+        }
       },
       "context" : {
         "url": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcSSNgusdAMMfrJ2-CJThZp83-FMtj8LDgw7v-RGzTd2aGLIDArV-A",
