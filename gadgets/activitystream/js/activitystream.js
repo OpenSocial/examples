@@ -16,9 +16,11 @@
     emptyTemplate = Handlebars.compile($("#activity_body_empty").html());
 
     Handlebars.registerHelper('getAvatarUrl', function(actor){
-      return actor.image ? actor.image.url : "error.png";  
+      var imageUrl = actor.image && actor.image.url;
+      return imageUrl ? imageUrl : "error.png";
     })
     Handlebars.registerHelper('formatPredicateClause', formatPredicateClause);
+    Handlebars.registerHelper('formatTargetObjectPreposition', formatTargetObjectPreposition);
     progress.setProgress(25);
     var activityFn = gadgets.views.getCurrentView().getName().toUpperCase() == gadgets.views.ViewType.PROFILE ? function() { social.loadOwnerActivityEntries(render); } : function() { social.loadActivityEntries(render); };
     activityFn();
@@ -66,7 +68,15 @@
   }
 
   function getArticle(obj) {
-    return /^[aeiou].*$/.test(obj) ? "an " : "a ";
+    var article = "";
+    switch(obj.objectType){
+      case "person":
+        break;
+      default:
+        article = /^[aeiou].*$/.test(getObjectTypeClause(obj)) ? "an":"a";
+        break;
+    }
+    return article;
   }
 
   function getPastTense(obj) {
@@ -78,8 +88,8 @@
       var resultCallback = function() {};
       var navigateCallback = function() {};
       var opt_params = {};
-      if(dataModel.preferredExperience && dataModel.preferredExperience.target) {
-        var target = dataModel.preferredExperience.target;
+      var target = dataModel.preferredExperience && dataModel.preferredExperience.target;
+      if(target) {
         opt_params.viewTarget=target.viewTarget;
         opt_params.view=target.view;
       } else {
@@ -116,9 +126,14 @@
         clause= "found";
         break;
       case "flag-as-inappropriate":
-        return "flagged " + object.displayName ? object.displayName : getArticle() + object.objectType+ " as inappropriate";
+        var phrase = "flagged " + (object.displayName ? object.displayName : getArticle() + object.objectType) + " as inappropriate";
+        return phrase;
+        break;
       case "give":
         clause= "gave";
+        break;
+      case "invite":
+        clause = "sent an invitation for";
         break;
       case "leave":
         clause= "left";
@@ -128,6 +143,9 @@
         break;
       case "make-friend":
         return "connected with " + getObjectTypeClause(object);
+        break;
+      case "remove-friend":
+        return "cut off all ties with " + getObjectTypeClause(object);
         break;
       case "qualify":
         clause= "qualified";
@@ -166,19 +184,33 @@
       default:
         clause=getPastTense(verb);
     }
-    return clause + " " + getArticle(object.objectType) + " " + getObjectTypeClause(object);
+    return clause + " " + getArticle(object) + " " + getObjectTypeClause(object);
   }
 
-  function getObjectTypeClause(type) {
-    switch(type.objectType) {
-      case "collection": 
-        return "collection of " + (type.objectTypes ? type.objectTypes.join(",") : "items");
-      case "person": 
-        return type.displayName ? type.displayName : type.id;
+  function formatTargetObjectPreposition(type){
+    var preposition = "";
+    switch (type) {
+      case "person":
+        preposition = "to";
+        break;
       default:
-        return type.objectType;
+        preposition = "at";
+        break;
+    }
+    return preposition;
+  }
+
+  function getObjectTypeClause(obj) {
+    switch(obj.objectType) {
+      case "collection": 
+        return "collection of " + (obj.objectTypes ? obj.objectTypes.join(",") : "items");
+      case "person": 
+        return obj.displayName ? obj.displayName : obj.id;
+      default:
+        return obj.objectType;
     }
   }
+
   function resize() { 
     var resizeInterval = null;
     var fn = function() {
